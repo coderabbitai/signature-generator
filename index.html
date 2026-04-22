@@ -565,7 +565,7 @@
       </div>
       <div class="field">
         <label for="tagline">tagline</label>
-        <input type="text" id="tagline" placeholder="AI code reviews that catch 95%+ of bugs" value="AI code reviews that catch 95%+ of bugs">
+        <input type="text" id="tagline" placeholder="AI code reviews" value="AI code reviews">
       </div>
     </div>
 
@@ -637,7 +637,7 @@
     email: '',
     phone: '',
     booking: '',
-    tagline: 'AI code reviews that catch 95%+ of bugs',
+    tagline: 'AI code reviews',
     showTagline: true,
     showCTA: true,
     layout: 'full'
@@ -849,7 +849,7 @@
 
   // ---------- Reset ----------
   $('resetBtn').addEventListener('click', () => {
-    inputs.forEach(id => { $(id).value = id === 'tagline' ? 'AI code reviews that catch 95%+ of bugs' : ''; state[id] = id === 'tagline' ? 'AI code reviews that catch 95%+ of bugs' : ''; });
+    inputs.forEach(id => { $(id).value = id === 'tagline' ? 'AI code reviews' : ''; state[id] = id === 'tagline' ? 'AI code reviews' : ''; });
     $('showTagline').checked = true; state.showTagline = true;
     $('showCTA').checked = true; state.showCTA = true;
     document.querySelectorAll('[data-layout]').forEach(b => b.classList.remove('active'));
