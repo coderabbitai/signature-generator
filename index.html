@@ -571,10 +571,6 @@
           <span>include youtube link</span>
         </label>
       </div>
-      <div class="field">
-        <label for="tagline">tagline</label>
-        <input type="text" id="tagline" placeholder="CodeRabbit | AI code reviews" value="CodeRabbit | AI code reviews">
-      </div>
     </div>
 
   </section>
@@ -655,7 +651,7 @@
 
   // ---------- Elements ----------
   const $ = (id) => document.getElementById(id);
-  const inputs = ['fullName','title','team','email','phone','booking','linkedin','tagline'];
+  const inputs = ['fullName','title','team','email','phone','booking','linkedin'];
   inputs.forEach(id => {
     const el = $(id);
     el.addEventListener('input', (e) => {
@@ -879,7 +875,7 @@
 
   // ---------- Reset ----------
   $('resetBtn').addEventListener('click', () => {
-    inputs.forEach(id => { $(id).value = id === 'tagline' ? 'CodeRabbit | AI code reviews' : ''; state[id] = id === 'tagline' ? 'CodeRabbit | AI code reviews' : ''; });
+    inputs.forEach(id => { $(id).value = ''; state[id] = ''; });
     $('showTagline').checked = true; state.showTagline = true;
     $('showCTA').checked = true; state.showCTA = true;
     $('showYoutube').checked = false; state.showYoutube = false;
