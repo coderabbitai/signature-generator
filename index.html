@@ -541,6 +541,10 @@
         <label for="booking">booking link (opt.)</label>
         <input type="url" id="booking" placeholder="https://cal.com/username">
       </div>
+      <div class="field">
+        <label for="linkedin">linkedin url (opt.)</label>
+        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourname">
+      </div>
     </div>
 
     <div class="field-group">
@@ -561,6 +565,10 @@
         <label class="checkbox-row">
           <input type="checkbox" id="showCTA" checked>
           <span>include "try coderabbit" link</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="showYoutube">
+          <span>include youtube link</span>
         </label>
       </div>
       <div class="field">
@@ -640,12 +648,14 @@
     tagline: 'AI code reviews',
     showTagline: true,
     showCTA: true,
+    showYoutube: false,
+    linkedin: '',
     layout: 'full'
   };
 
   // ---------- Elements ----------
   const $ = (id) => document.getElementById(id);
-  const inputs = ['fullName','title','team','email','phone','booking','tagline'];
+  const inputs = ['fullName','title','team','email','phone','booking','linkedin','tagline'];
   inputs.forEach(id => {
     const el = $(id);
     el.addEventListener('input', (e) => {
@@ -655,6 +665,7 @@
   });
   $('showTagline').addEventListener('change', e => { state.showTagline = e.target.checked; render(); });
   $('showCTA').addEventListener('change', e => { state.showCTA = e.target.checked; render(); });
+  $('showYoutube').addEventListener('change', e => { state.showYoutube = e.target.checked; render(); });
 
   document.querySelectorAll('[data-layout]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -679,6 +690,10 @@
       }
     });
   });
+
+  // ---------- Social icon data URIs ----------
+  const LINKEDIN_ICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><rect width="16" height="16" rx="2" fill="#0A66C2"/><text x="3.5" y="12" font-family="Arial" font-size="9" font-weight="bold" fill="white">in</text></svg>');
+  const YOUTUBE_ICON = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><rect width="16" height="16" rx="2" fill="#FF0000"/><polygon points="6,4.5 6,11.5 12,8" fill="white"/></svg>');
 
   // ---------- Signature HTML builder ----------
   // Uses tables + inline styles for Gmail/Outlook/Apple Mail compatibility.
@@ -723,8 +738,20 @@
     const contactParts = [];
     if (email) contactParts.push(`<a href="mailto:${email}" style="${linkStyle}">${email}</a>`);
     if (phone) contactParts.push(`<span style="color:${neutral};">${phone}</span>`);
-    if (booking) contactParts.push(`<a href="${booking}" style="${linkStyle}">Book a time</a>`);
+    if (booking) contactParts.push(`<a href="${esc(s.booking)}" style="${linkStyle}">Book a time</a>`);
     const contactLine = contactParts.join(`<span style="color:${dim};"> &nbsp;·&nbsp; </span>`);
+
+    // Social icons row (LinkedIn + YouTube)
+    const socialParts = [];
+    if (s.linkedin) {
+      socialParts.push(`<a href="${esc(s.linkedin)}" style="display:inline-block;margin-right:6px;text-decoration:none;"><img src="${LINKEDIN_ICON}" alt="LinkedIn" width="16" height="16" style="display:inline-block;border:0;width:16px;height:16px;vertical-align:middle;"></a>`);
+    }
+    if (s.showYoutube) {
+      socialParts.push(`<a href="https://www.youtube.com/@CodeRabbitAI" style="display:inline-block;text-decoration:none;"><img src="${YOUTUBE_ICON}" alt="YouTube" width="16" height="16" style="display:inline-block;border:0;width:16px;height:16px;vertical-align:middle;"></a>`);
+    }
+    const socialHtml = socialParts.length > 0
+      ? `<tr><td style="${baseFont}padding-top:6px;">${socialParts.join('')}</td></tr>`
+      : '';
 
     // --------- LAYOUT: MINIMAL ---------
     if (s.layout === 'minimal') {
@@ -735,6 +762,7 @@
       <div style="font-weight:700;color:${neutral};font-size:14px;">${name}</div>
       <div style="color:${dim};font-size:12px;padding-top:2px;">${title}${team}</div>
       ${email ? `<div style="padding-top:6px;font-size:12px;"><a href="mailto:${email}" style="color:${orange};text-decoration:none;">${email}</a></div>` : ''}
+      ${socialParts.length > 0 ? `<div style="padding-top:6px;">${socialParts.join('')}</div>` : ''}
     </td>
   </tr>
 </table>`.trim();
@@ -752,6 +780,7 @@
       <div style="font-weight:700;color:${neutral};font-size:14px;">${name}</div>
       <div style="color:${dim};font-size:12px;padding-top:2px;">${title}${team}</div>
       ${contactLine ? `<div style="padding-top:6px;font-size:12px;">${contactLine}</div>` : ''}
+      ${socialParts.length > 0 ? `<div style="padding-top:6px;">${socialParts.join('')}</div>` : ''}
     </td>
   </tr>
 </table>`.trim();
@@ -777,6 +806,7 @@
           </td>
         </tr>
         ${contactLine ? `<tr><td style="${baseFont}padding-top:8px;font-size:12px;">${contactLine}</td></tr>` : ''}
+        ${socialHtml}
         ${taglineHtml}
         ${ctaHtml}
       </table>
@@ -852,6 +882,7 @@
     inputs.forEach(id => { $(id).value = id === 'tagline' ? 'AI code reviews' : ''; state[id] = id === 'tagline' ? 'AI code reviews' : ''; });
     $('showTagline').checked = true; state.showTagline = true;
     $('showCTA').checked = true; state.showCTA = true;
+    $('showYoutube').checked = false; state.showYoutube = false;
     document.querySelectorAll('[data-layout]').forEach(b => b.classList.remove('active'));
     document.querySelector('[data-layout="full"]').classList.add('active');
     state.layout = 'full';
