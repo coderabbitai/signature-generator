@@ -515,15 +515,15 @@
       <div class="section-label">identity</div>
       <div class="field">
         <label for="fullName">full name</label>
-        <input type="text" id="fullName" placeholder="Shaun Kelly" value="">
+        <input type="text" id="fullName" placeholder="Alex Johnson" value="">
       </div>
       <div class="field">
         <label for="title">title</label>
-        <input type="text" id="title" placeholder="Head of Design" value="">
+        <input type="text" id="title" placeholder="Software Engineer" value="">
       </div>
       <div class="field">
         <label for="team">team (opt.)</label>
-        <input type="text" id="team" placeholder="Design">
+        <input type="text" id="team" placeholder="Engineering">
       </div>
     </div>
 
@@ -531,15 +531,15 @@
       <div class="section-label">contact</div>
       <div class="field">
         <label for="email">email</label>
-        <input type="email" id="email" placeholder="shaun@coderabbit.ai">
+        <input type="email" id="email" placeholder="alex@coderabbit.ai">
       </div>
       <div class="field">
         <label for="phone">phone (opt.)</label>
-        <input type="tel" id="phone" placeholder="+1 555 123 4567">
+        <input type="tel" id="phone" placeholder="+1 555 000 0000">
       </div>
       <div class="field">
         <label for="booking">booking link (opt.)</label>
-        <input type="url" id="booking" placeholder="https://cal.com/shaun">
+        <input type="url" id="booking" placeholder="https://cal.com/username">
       </div>
     </div>
 
@@ -693,7 +693,7 @@
 
     const esc = (v) => String(v || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-    const name = esc(s.fullName || 'Your Name');
+    const name = esc(s.fullName || 'Alex Johnson');
     const title = esc(s.title || 'Your Title');
     const team = s.team ? ` · ${esc(s.team)}` : '';
     const email = esc(s.email);
