@@ -718,15 +718,15 @@
 
     // CTA line (try CodeRabbit)
     const ctaHtml = s.showCTA
-      ? `<tr><td style="${baseFont}padding-top:8px;font-size:12px;color:${dim};">
+      ? `<tr><td style="${baseFont}padding-top:3px;font-size:12px;color:${dim};">
            <a href="https://www.coderabbit.ai" style="${orangeLinkStyle}">Try CodeRabbit →</a>
          </td></tr>`
       : '';
 
     // Tagline line
     const taglineHtml = (s.showTagline && s.tagline)
-      ? `<tr><td style="${baseFont}padding-top:6px;font-size:12px;color:${dim};font-style:italic;">
-           ${esc(s.tagline)}
+      ? `<tr><td style="${baseFont}padding-top:6px;font-size:12px;color:${dim};">
+           ${esc(s.tagline).replace('CodeRabbit', `<strong>CodeRabbit</strong>`)}
          </td></tr>`
       : '';
 
